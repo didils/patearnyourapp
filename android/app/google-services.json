@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "364047764287",
+    "firebase_url": "https://yourapp-d2b88.firebaseio.com",
+    "project_id": "yourapp-d2b88",
+    "storage_bucket": "yourapp-d2b88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364047764287:android:b47ae1d53b3acf796ea18a",
+        "android_client_info": {
+          "package_name": "com.yourapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364047764287-ug8h7qpr0njo7e8air7sa51sr5tl3j0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2CnSzY6265x3FZFfHhQ6eQr6NBw3vs3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364047764287-ug8h7qpr0njo7e8air7sa51sr5tl3j0c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "364047764287-f1qpqrf3vfn1vo5s92pe0blev33m34q9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.patearn.pushexam.yourapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
