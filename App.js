@@ -1,9 +1,37 @@
 import React, {Component} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import firebase from 'react-native-firebase';
 import AsyncStorage from '@react-native-community/async-storage';
+import {Provider} from 'react-redux';
+// import {PersistGate} from 'redux-persist/integration/react';
+import configureStore from './redux/configureStore';
+import AppContainer from './components/AppContainer';
+import 'react-native-gesture-handler';
+import {ChannelIO} from 'react-native-channel-plugin';
+const {store} = configureStore();
+import type {RemoteMessage} from 'react-native-firebase';
+
+// let settings = {
+//   pluginKey: '8f0282b1-66bc-49f2-be87-236a3f518e73',
+// };
+
+let settings = {
+  pluginKey: 'd2fbd87c-f46c-458a-91bb-63064f0f03a0',
+  userId: 'userId',
+  profile: {
+    name: 'Jason',
+    mobileNumber: '01012345678',
+  },
+  launcherConfig: {
+    xMargin: Platform.OS === 'ios' ? 30 : 10,
+    yMargin: 75,
+    position: 'right',
+  },
+};
+
+// ChannelIO.boot(settings).then(result => {});
 
 export default class App extends Component {
   constructor(props) {
@@ -53,28 +81,85 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    firebase
-      .messaging()
-      .hasPermission()
-      .then(enabled => {
-        if (enabled) {
-          console.log('푸쉬 허용됨');
-        } else {
-          console.log('푸시 허용되지 않음');
-          this.NotiPermission();
-        }
+    ChannelIO.boot(settings).then(result => {
+      console.log('settings', settings);
+      console.log('result', result);
+    });
+    ChannelIO.show(true);
+    if (Platform.OS === 'ios') {
+      PushNotificationIOS.addEventListener('register', token => {
+        console.log('token in the componentdidmount', token);
+        ChannelIO.initPushToken(token);
+      });
+      PushNotificationIOS.addEventListener('notification', notification => {
+        ChannelIO.isChannelPushNotification(notification.getData()).then(
+          result => {
+            console.log('이벤트 리스너 내부 result', result);
+            if (result) {
+              ChannelIO.handlePushNotification(notification.getData()).then(
+                () => {
+                  notification.finish(PushNotificationIOS.FetchResult.NoData);
+                },
+              );
+            } else {
+              //other push logics goes here
+              notification.finish(PushNotificationIOS.FetchResult.NoData);
+            }
+          },
+        );
+      });
+      const permissionResult = await PushNotificationIOS.requestPermissions();
+      console.log('permissionResult', permissionResult);
+    } else if (Platform.OS === 'android') {
+      firebase
+        .messaging()
+        .hasPermission()
+        .then(enabled => {
+          if (enabled) {
+            console.log('푸쉬 허용됨');
+          } else {
+            console.log('푸시 허용되지 않음');
+            this.NotiPermission();
+          }
+        });
+
+      let fcmToken = await AsyncStorage.getItem('fcmToken');
+      console.log('AsyncStorage로부터 불러온 fcmToken', fcmToken);
+
+      this.onRefreshListener = firebase.messaging().onTokenRefresh(fcmToken => {
+        console.log(
+          'onRefreshListenr의 fcmTocken으로 ChannelIO.initPushToken으로 들어감',
+          fcmToken,
+        );
+        ChannelIO.initPushToken(fcmToken);
       });
 
-    let fcmToken = await AsyncStorage.getItem('fcmToken');
-    console.log('AsyncStorage로부터 불러온 fcmToken', fcmToken);
-
-    if (!fcmToken) {
-      fcmToken = await firebase.messaging().getToken();
-      if (fcmToken) {
-        console.log('firebase로부터 얻은 fcmTocken', fcmToken);
-        await AsyncStorage.setItem('fcmTocken', fcmToken);
+      if (!fcmToken) {
+        fcmToken = await firebase.messaging().getToken();
+        if (fcmToken) {
+          console.log('firebase로부터 얻은 fcmTocken', fcmToken);
+          ChannelIO.initPushToken(fcmToken);
+          await AsyncStorage.setItem('fcmTocken', fcmToken);
+        }
       }
+      this.mListener = firebase
+        .messaging()
+        .onMessage((message: RemoteMessage) => {
+          console.log('mListener내부의 메시지', fcmToken);
+          ChannelIO.isChannelPushNotification(message.data).then(result => {
+            if (result) {
+              ChannelIO.handlePushNotification(message.data).then(_ => {});
+            } else {
+              // TODO : Your FCM code
+            }
+          });
+        });
     }
+  }
+
+  componentWillUnmount() {
+    this.onRefreshListener();
+    this.mListener();
   }
 
   async sendNotification() {
@@ -111,10 +196,13 @@ export default class App extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text> Received push notification </Text>
-        <Button title="푸쉬 보내기" onPress={() => this.sendNotification()} />
-      </View>
+      <Provider store={store}>
+        {/* <PersistGate persistor={persistor}> */}
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <AppContainer />
+        </View>
+        {/* </PersistGate> */}
+      </Provider>
     );
   }
 }

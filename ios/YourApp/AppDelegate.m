@@ -13,11 +13,15 @@
 #import <Firebase.h>
 #import <RNCPushNotificationIOS.h>
 
+@import ChannelIO;
+
+@interface AppDelegate ()
+@end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   [FIRApp configure];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
@@ -31,6 +35,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [ChannelIO initialize:application];
   return YES;
 }
 
