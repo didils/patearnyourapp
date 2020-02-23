@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import container from './container';
 
 // redux 연결 시
-// import { actionCreators as userActions } from "../../redux/modules/user";
+// import { actionCreators as userAction } from "../../redux/modules/user";
 
 // const mapStateToProps = (state, ownProps) => {
 //     return {
@@ -18,4 +18,5 @@ import container from './container';
 //     }
 // }
 
-export default connect(mapStateToProps, mapDispatchToProps)(container);
+export default container;
+// export default connect(mapStateToProps, mapDispatchToProps)(container);
