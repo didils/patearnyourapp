@@ -39,17 +39,17 @@ class AskScreen2 extends Component {
           <View style={styles.process}>
             <Icon
               name="md-home"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
             <Icon
               name="ios-arrow-forward"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
-            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 15}}>
+            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 13}}>
               브랜드 타입
             </Text>
             <Icon
@@ -215,11 +215,10 @@ const styles = StyleSheet.create({
   },
   bottom: {
     paddingHorizontal: 25,
-    height: width * 0.4,
+    height: width * 0.36,
   },
   menuIcon: {
-    marginHorizontal: 17,
-    marginVertical: 17,
+    padding: 17,
   },
   stepTitle: {
     flexDirection: 'row',

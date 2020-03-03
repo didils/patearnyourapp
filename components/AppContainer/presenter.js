@@ -17,6 +17,8 @@ import LogInScreen2c from '../../screens/LogInScreens/LogInScreen2c';
 import LogInScreen2d from '../../screens/LogInScreens/LogInScreen2d';
 import LogInScreen3 from '../../screens/LogInScreens/LogInScreen3';
 import LogInScreen4 from '../../screens/LogInScreens/LogInScreen4';
+import CaseInfoScreen1 from '../../screens/CaseInfoScreens/CaseInfoScreen1';
+import CaseInfoScreen2 from '../../screens/CaseInfoScreens/CaseInfoScreen2';
 
 const {width, height} = Dimensions.get('window');
 const Stack = createStackNavigator();
@@ -24,6 +26,12 @@ class AppContainer extends Component {
   static propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
   };
+  componentDidUpdate() {
+    const {isLoggedIn, initApp} = this.props;
+    if (isLoggedIn) {
+      initApp();
+    }
+  }
   render() {
     const {isLoggedIn} = this.props;
     return (
@@ -44,6 +52,8 @@ class AppContainer extends Component {
             <Stack.Screen name="LogIn2d" component={LogInScreen2d} />
             <Stack.Screen name="LogIn3" component={LogInScreen3} />
             <Stack.Screen name="LogIn4" component={LogInScreen4} />
+            <Stack.Screen name="CaseInfo1" component={CaseInfoScreen1} />
+            <Stack.Screen name="CaseInfo2" component={CaseInfoScreen2} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

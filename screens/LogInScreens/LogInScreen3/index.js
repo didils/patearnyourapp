@@ -3,6 +3,7 @@ import container from './container';
 
 // redux 연결 시
 import {actionCreators as userAction} from '../../../redux/modules/user';
+import {actionCreators as caseAction} from '../../../redux/modules/cases';
 
 // const mapStateToProps = (state, ownProps) => {
 //     return {

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import AppContainer from './presenter';
-// import { actionCreators as caseAction } from "../../redux/modules/cases";
+import {actionCreators as caseAction} from '../../redux/modules/cases';
 
 const mapStateToProps = (state, ownProps) => {
   const {user} = state;
@@ -13,9 +13,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    // initApp: () => {
-    //   dispatch(caseAction.getFeed());
-    // },
+    initApp: () => {
+      dispatch(caseAction.getCases());
+      dispatch(caseAction.getProcessItems());
+    },
     // resetFeed: () => {
     //   dispatch(caseAction.resetFeed());
     // }

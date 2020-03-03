@@ -29,7 +29,7 @@ class Container extends Component {
         params: {username, catchFromAsk},
       },
     } = this.props;
-    if (username === 'didils' && password === 'qudwns12') {
+    if (username === 'didils1' && password === 'qudwns12') {
       if (!isSubmitting) {
         this.setState({
           isSubmitting: true,

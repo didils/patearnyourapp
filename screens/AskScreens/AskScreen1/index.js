@@ -17,10 +17,10 @@ class AskScreen1 extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.menuIcon}
-            onPressOut={() => navigation.navigate('Main')}>
-            <Icon name="ios-arrow-back" size={26} color="black" />
+          <TouchableOpacity onPressOut={() => navigation.navigate('Main')}>
+            <View style={styles.menuIcon}>
+              <Icon name="ios-arrow-back" size={26} color="black" />
+            </View>
           </TouchableOpacity>
           <Image
             style={{width: width * 0.26}}
@@ -32,13 +32,13 @@ class AskScreen1 extends Component {
           <View style={styles.process}>
             <Icon
               name="md-home"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
             <Icon
               name="ios-arrow-forward"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
@@ -50,7 +50,7 @@ class AskScreen1 extends Component {
             </Text>
           </View>
           <Text style={styles.explain}>
-            등록하고자 하는 브랜드의 타입이 뭔가요?
+            등록하고자 하는 브랜드의 타입이 무엇인가요?
           </Text>
         </View>
         <View style={styles.btnContainer}>
@@ -88,11 +88,10 @@ const styles = StyleSheet.create({
   },
   bottom: {
     paddingHorizontal: 25,
-    height: width * 0.4,
+    height: width * 0.36,
   },
   menuIcon: {
-    marginHorizontal: 17,
-    marginVertical: 17,
+    padding: 17,
   },
   stepTitle: {
     flexDirection: 'row',

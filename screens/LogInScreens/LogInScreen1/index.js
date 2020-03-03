@@ -50,7 +50,7 @@ class LogInScreen1 extends Component {
         </View>
         <View style={styles.body}>
           <Text style={{margin: 20, fontSize: 15}}>
-            아이디를 입력해 주세요.
+            신규 또는 기존 아이디를 입력해 주세요.
           </Text>
           <TextInput
             placeholder="아이디"
@@ -212,8 +212,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   menuIcon: {
-    marginHorizontal: 17,
-    marginVertical: 17,
+    padding: 17,
   },
   body: {
     alignItems: 'center',

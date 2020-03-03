@@ -9,7 +9,7 @@
 		<string>EvilIcons.ttf</string>
 		<string>Feather.ttf</string>
 		<string>FontAwesome.ttf</string>
-		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string> 
 		<string>FontAwesome5_Regular.ttf</string>
 		<string>FontAwesome5_Solid.ttf</string>
 		<string>Foundation.ttf</string>
@@ -98,28 +98,38 @@
 		<true/>
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>tradearn-ipv6.ap-northeast-2.elasticbeanstalk.com</key>
-      <dict>
-        <!--Include to allow subdomains-->
-        <key>NSIncludesSubdomains</key>
-        <true/>
-        <!--Include to allow HTTP requests-->
-        <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-        <true/>
-      </dict>
+        <dict>
+          <!--Include to allow subdomains-->
+          <key>NSIncludesSubdomains</key>
+          <true/>
+          <!--Include to allow HTTP requests-->
+          <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+          <key>NSTemporaryExceptionMinimumTLSVersion</key>
+          <string>TLSv1.1</string>
+        </dict>
+      <key>eaf427d8.ngrok.io</key>
+        <dict>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+        </dict>
 			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
+        <dict>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+        </dict>
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

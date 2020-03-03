@@ -151,7 +151,6 @@ function applyLogOut(state) {
     isLoggedIn: false,
     isCase: false,
     token: '',
-    case: [],
   };
 }
 

@@ -3,8 +3,6 @@ import MainScreen from './presenter';
 
 class Container extends Component {
   render() {
-    // this.props.logOut();
-    console.log('mainscreen props', this.props);
     return <MainScreen {...this.props} checkLogIn={this._checkLogIn} />;
   }
   _checkLogIn = () => {

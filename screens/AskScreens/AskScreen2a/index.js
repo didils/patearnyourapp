@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MAIN_COLOR, TEXT_COLOR} from '../../../constants';
-import ImagePicker from 'react-native-image-crop-picker';
 
 const {width, height} = Dimensions.get('window');
 
@@ -42,22 +41,22 @@ class AskScreen2a extends Component {
           <View style={styles.process}>
             <Icon
               name="md-home"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
             <Icon
               name="ios-arrow-forward"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
-            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 15}}>
+            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 13}}>
               브랜드 타입
             </Text>
             <Icon
               name="ios-arrow-forward"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
@@ -193,11 +192,10 @@ const styles = StyleSheet.create({
   },
   bottom: {
     paddingHorizontal: 25,
-    height: width * 0.4,
+    height: width * 0.36,
   },
   menuIcon: {
-    marginHorizontal: 17,
-    marginVertical: 17,
+    padding: 17,
   },
   stepTitle: {
     flexDirection: 'row',

@@ -71,40 +71,40 @@ class AskScreen4 extends Component {
           <View style={styles.process}>
             <Icon
               name="md-home"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
             <Icon
               name="ios-arrow-forward"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
-            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 15}}>
+            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 13}}>
               브랜드 타입
             </Text>
             <Icon
               name="ios-arrow-forward"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
-            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 15}}>
+            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 13}}>
               로고/텍스트 입력
             </Text>
             <Icon
               name="ios-arrow-forward"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
-            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 15}}>
+            <Text style={{color: '#B2B2B2', marginRight: 6, fontSize: 13}}>
               업종 선택
             </Text>
             <Icon
               name="ios-arrow-forward"
-              size={18}
+              size={16}
               color="#B2B2B2"
               style={{marginRight: 6}}
             />
@@ -131,10 +131,46 @@ class AskScreen4 extends Component {
           </View>
           <View
             style={{flex: 2, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={styles.explain}>{selected}</Text>
+            <Text style={[styles.explain, {fontSize: 16}]}>선택된 업종:</Text>
+            <Text style={[styles.explain, {fontWeight: '600'}]}>
+              {selected}
+            </Text>
           </View>
         </View>
-        <View style={{padding: 15, alignItems: 'center', marginTop: 40}}>
+        <View
+          style={{
+            padding: 15,
+            alignItems: 'center',
+            marginTop: 10,
+          }}>
+          <View style={styles.noticeBox}>
+            <Text
+              style={{
+                color: MAIN_COLOR,
+                fontWeight: '300',
+                fontSize: 16,
+                marginBottom: 4,
+              }}>
+              신청 다음 절차는...
+            </Text>
+            <Text
+              style={{
+                flexWrap: 'wrap',
+                color: TEXT_COLOR,
+                fontSize: 15,
+                fontWeight: '300',
+              }}>
+              신청하신 브랜드가 특허청에 상표 등록 될 수 있는지 전문 변리사가
+              꼼꼼하게 검토하여 1~2일 내로 회신 드립니다.
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={{paddingBottom: 20}}
+            onPressOut={this.props.onPressConfirm}>
+            <Text style={{color: MAIN_COLOR, fontWeight: '600'}}>
+              전체 절차가 궁금하신가요?
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPressOut={this.props.onPressConfirm}>
@@ -152,6 +188,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 5,
   },
+  noticeBox: {
+    borderRadius: 1,
+    width,
+    height: width * 0.26,
+    marginBottom: 20,
+    backgroundColor: '#FAFAFA',
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+  },
   header: {
     backgroundColor: 'white',
     width,
@@ -164,11 +209,10 @@ const styles = StyleSheet.create({
   },
   bottom: {
     paddingHorizontal: 25,
-    height: width * 0.4,
+    height: width * 0.36,
   },
   menuIcon: {
-    marginHorizontal: 17,
-    marginVertical: 17,
+    padding: 17,
   },
   stepTitle: {
     flexDirection: 'row',

@@ -153,8 +153,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   menuIcon: {
-    marginHorizontal: 17,
-    marginVertical: 17,
+    padding: 17,
   },
   body: {
     alignItems: 'center',

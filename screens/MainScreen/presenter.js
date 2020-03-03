@@ -10,40 +10,78 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MAIN_COLOR} from '../../constants';
+import MainCase from '../../components/MainCase';
 
 const {width, height} = Dimensions.get('window');
 
 class MainScreen extends Component {
   render() {
-    const {isLoggedIn} = this.props;
+    const {isLoggedIn, myProcessItem} = this.props;
+    console.log('Mainscreen props myProcessItem', myProcessItem);
+    console.log('Mainscreen props cases', this.props);
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.menuIcon}
+            onPressOut={() => this.props.logOut()}>
+            <Icon name="ios-menu" size={26} color="black" />
+          </TouchableOpacity>
+          {isLoggedIn ? (
+            <Image
+              style={{width: width * 0.26}}
+              source={require('../../assets/images/logo.jpeg')}
+              resizeMode={'contain'}
+            />
+          ) : (
+            <Text>로그인안됨</Text>
+          )}
+        </View>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <View style={styles.header}>
-            <TouchableOpacity style={styles.menuIcon}>
-              <Icon name="ios-menu" size={26} color="black" />
-            </TouchableOpacity>
-            {isLoggedIn ? (
-              <Image
-                style={{width: width * 0.26}}
-                source={require('../../assets/images/logo.jpeg')}
-                resizeMode={'contain'}
-              />
-            ) : (
-              <Text>로그인안됨</Text>
-            )}
-          </View>
-          {this.props.isCase ? (
+          {this.props.myCase && this.props.myCase.length > 0 ? (
             <View style={{alignItems: 'center'}}>
-              <View style={{width, padding: 15}}>
-                <Text style={{fontSize: 17}}>내 브랜드</Text>
+              <View style={{width, paddingLeft: 20}}>
+                <Text style={{fontSize: 24, fontWeight: 'bold'}}>
+                  내 브랜드
+                </Text>
               </View>
-              <TouchableOpacity
-                onPressOut={() => this.props.navigation.navigate('Ask1')}>
-                <View style={styles.mainBtnCase}>
-                  <Text>내 사건 상세</Text>
-                </View>
-              </TouchableOpacity>
+              <View
+                style={{
+                  height: width * 0.55,
+                }}>
+                <ScrollView
+                  horizontal={true}
+                  // pagingEnabled={true}
+                  // decelerationRate={0}
+                  // snapToInterval={width * 0.85} //your element width
+                  // snapToAlignment={"start"}
+                  // contentInset={{
+                  //   top: 0,
+                  //   left: width * 0.1,
+                  //   bottom: 0,
+                  //   right: width * 0.1
+                  // }}
+                  // contentContainerStyle={{flex: 1}}
+                >
+                  <View style={{width: width * 0.05}} />
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    {this.props.myCase &&
+                      this.props.myCase.map((cases, index) => (
+                        <MainCase
+                          cases={cases}
+                          key={index}
+                          navigation={this.props.navigation}
+                          myProcessItem={this.props.myProcessItem}
+                        />
+                      ))}
+                  </View>
+                  <View style={{width: width * 0.1}} />
+                </ScrollView>
+              </View>
               <View style={styles.mainBtnAdded}>
                 <View>
                   <Text style={styles.textBtnAdded}>나만의 브랜드를</Text>
@@ -147,8 +185,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   menuIcon: {
-    marginHorizontal: 17,
-    marginVertical: 17,
+    padding: 17,
   },
   scrollView: {
     alignItems: 'center',

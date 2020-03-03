@@ -3,7 +3,7 @@ import {persistStore, persistCombineReducers} from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 import thunk from 'redux-thunk';
 import user from './modules/user';
-// import cases from "./modules/cases";
+import cases from './modules/cases';
 // import caseFiles from "./modules/caseFiles";
 // import product from "./modules/product";
 
@@ -16,7 +16,7 @@ const persistConfig = {
 
 const reducer = persistCombineReducers(persistConfig, {
   user,
-  //   cases,
+  cases,
   //   product,
   //   caseFiles
 });
