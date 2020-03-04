@@ -59,7 +59,7 @@ class Container extends Component {
             if (catchFromAsk) {
               navigation.navigate('Ask1');
             } else {
-              navigation.navigate('Main');
+              navigation.navigate('Stack');
             }
           }
         } else {

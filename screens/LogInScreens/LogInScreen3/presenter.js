@@ -34,8 +34,14 @@ class LogInScreen3 extends Component {
           />
         </View>
         <View style={styles.body}>
-          <Text style={{margin: 20, fontSize: 15}}>
-            비밀번호를 입력해 주세요.
+          <Text
+            style={{
+              margin: 20,
+              fontSize: 15,
+              textAlign: 'center',
+              lineHeight: 25,
+            }}>
+            {`다시 오신 것을 환영합니다.\n비밀번호를 입력하여 로그인 해 주세요.`}
           </Text>
           <TextInput
             placeholder="비밀번호"

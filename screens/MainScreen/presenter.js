@@ -9,33 +9,27 @@ import {
   Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {MAIN_COLOR} from '../../constants';
+import {MAIN_COLOR, TEXT_COLOR} from '../../constants';
 import MainCase from '../../components/MainCase';
+import ReviewItem from '../../components/ReviewItem';
 
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 class MainScreen extends Component {
   render() {
-    const {isLoggedIn, myProcessItem} = this.props;
-    console.log('Mainscreen props myProcessItem', myProcessItem);
-    console.log('Mainscreen props cases', this.props);
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.menuIcon}
-            onPressOut={() => this.props.logOut()}>
+            onPress={() => this.props.navigation.openDrawer()}>
             <Icon name="ios-menu" size={26} color="black" />
           </TouchableOpacity>
-          {isLoggedIn ? (
-            <Image
-              style={{width: width * 0.26}}
-              source={require('../../assets/images/logo.jpeg')}
-              resizeMode={'contain'}
-            />
-          ) : (
-            <Text>로그인안됨</Text>
-          )}
+          <Image
+            style={{width: width * 0.26}}
+            source={require('../../assets/images/logo.jpeg')}
+            resizeMode={'contain'}
+          />
         </View>
         <ScrollView contentContainerStyle={styles.scrollView}>
           {this.props.myCase && this.props.myCase.length > 0 ? (
@@ -119,6 +113,118 @@ class MainScreen extends Component {
               </View>
             </TouchableOpacity>
           )}
+          <View
+            style={{
+              width,
+              alignItems: 'center',
+              borderRadius: 5,
+              borderTopColor: '#f0f0f0',
+              borderTopWidth: 10,
+              paddingTop: 15,
+            }}>
+            <View style={{width}}>
+              <Text
+                style={{
+                  color: TEXT_COLOR,
+                  fontWeight: '500',
+                  fontSize: 25,
+                  padding: 20,
+                }}>
+                유용한 정보
+              </Text>
+            </View>
+            <TouchableOpacity onPress={() => console.log('chekc')}>
+              <View style={styles.mainBtnBottom}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}>
+                  <Text style={styles.textBtnBottomTitle}>상표등록</Text>
+                  <Text style={styles.textBtnBottom}>
+                    상표 등록은 왜 해야하죠?
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => console.log('chekc')}>
+              <View style={styles.mainBtnBottom}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}>
+                  <Text style={styles.textBtnBottomTitle}>비용/기간</Text>
+                  <Text style={styles.textBtnBottom}>
+                    숫자로 알아보는 상표 출원
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => console.log('chekc')}>
+              <View style={styles.mainBtnBottom}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}>
+                  <Text style={styles.textBtnBottomTitle}>절차</Text>
+                  <Text style={styles.textBtnBottom}>
+                    등록 절차가 어떻게 되나요?
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => console.log('chekc')}>
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  width: width * 0.9,
+                  paddingVertical: 20,
+                  paddingLeft: 3,
+                  justifyContent: 'space-between',
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}>
+                  <Text style={styles.textBtnBottomTitle}>담당</Text>
+                  <Text style={styles.textBtnBottom}>누가 관리해 주나요?</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              width,
+              alignItems: 'center',
+              borderRadius: 5,
+              borderTopColor: '#f0f0f0',
+              borderTopWidth: 10,
+              paddingTop: 15,
+            }}>
+            <View style={{width}}>
+              <Text
+                style={{
+                  color: TEXT_COLOR,
+                  fontWeight: '500',
+                  fontSize: 25,
+                  padding: 20,
+                }}>
+                브랜드 등록 후기
+              </Text>
+              <ReviewItem
+                uri={require('../../assets/images/4020160108616.jpg')}
+                comment={'정말 간편하고 좋았어요.'}
+              />
+            </View>
+          </View>
+          <View style={{height: 100, backgroundColor: '#fAFAFA', width}}></View>
         </ScrollView>
       </View>
     );
@@ -143,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: MAIN_COLOR,
     width: width * 0.91,
     height: width * 0.5,
-    borderRadius: width * 0.01,
+    borderRadius: 6,
     padding: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -154,6 +260,51 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
     elevation: 10,
     justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  mainBtnBottom: {
+    backgroundColor: 'white',
+    width: width * 0.9,
+    paddingVertical: 20,
+    paddingLeft: 3,
+    justifyContent: 'space-between',
+    borderBottomColor: '#e8e8e8',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  textBtnBottom: {
+    fontSize: 17,
+    fontWeight: '200',
+    color: TEXT_COLOR,
+  },
+  textBtnBottomTitle: {
+    fontSize: 17,
+    fontWeight: '500',
+    color: MAIN_COLOR,
+    width: width * 0.25,
+  },
+  mainBtnBottomLeft: {
+    backgroundColor: '#FAFAFA',
+    borderColor: TEXT_COLOR,
+    borderWidth: StyleSheet.hairlineWidth,
+    width: width * 0.44,
+    borderRadius: width * 0.01,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+    justifyContent: 'space-between',
+    marginTop: 25,
+  },
+  textBtnBottomLeft: {
+    fontSize: 19,
+    fontWeight: '300',
+    color: TEXT_COLOR,
   },
   mainBtnCase: {
     backgroundColor: '#FAFAFA',
@@ -178,8 +329,6 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    borderBottomColor: 'lightgrey',
-    borderBottomWidth: 4,
     borderTopColor: 'lightgrey',
     borderTopWidth: StyleSheet.hairlineWidth,
     marginTop: 10,

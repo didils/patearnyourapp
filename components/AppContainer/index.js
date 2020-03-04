@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import AppContainer from './presenter';
 import {actionCreators as caseAction} from '../../redux/modules/cases';
+import {actionCreators as userAction} from '../../redux/modules/user';
 
 const mapStateToProps = (state, ownProps) => {
   const {user} = state;
@@ -16,6 +17,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     initApp: () => {
       dispatch(caseAction.getCases());
       dispatch(caseAction.getProcessItems());
+    },
+    logOut: () => {
+      dispatch(userAction.logOut());
     },
     // resetFeed: () => {
     //   dispatch(caseAction.resetFeed());

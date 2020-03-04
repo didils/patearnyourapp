@@ -38,7 +38,7 @@ class LogInScreen2 extends Component {
         </View>
         <View style={styles.body}>
           <Text style={{margin: 20, fontSize: 15}}>
-            비밀번호를 입력해 주세요.
+            {`사용하실 비밀번호를 입력해 주세요.`}
           </Text>
           <TextInput
             placeholder="비밀번호"

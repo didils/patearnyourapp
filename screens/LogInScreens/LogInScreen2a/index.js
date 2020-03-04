@@ -37,7 +37,7 @@ class LogInScreen2a extends Component {
         </View>
         <View style={styles.body}>
           <Text style={{margin: 20, fontSize: 15}}>
-            비밀번호를 한 번 더 입력해 주세요.
+            같은 비밀번호를 한 번 더 입력해 주세요.
           </Text>
           <TextInput
             placeholder="비밀번호 재입력"
