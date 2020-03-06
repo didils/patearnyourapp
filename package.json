@@ -27,6 +27,7 @@
     "react-native-masked-text": "^1.13.0",
     "react-native-pdf": "^6.0.1",
     "react-native-push-notification": "^3.1.9",
+    "react-native-ratings": "^6.5.0",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.6.4",
     "react-native-screens": "^2.0.0-beta.10",

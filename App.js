@@ -174,7 +174,6 @@ export default class App extends Component {
       body: JSON.stringify(message),
     });
     response = await response.json();
-    console.log(response);
   }
 
   render() {

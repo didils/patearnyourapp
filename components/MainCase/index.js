@@ -45,12 +45,6 @@ class MainCase extends Component {
       );
     if (filtered.length !== 0) {
       const lastStatus = filtered[filtered.length - 1].current_status;
-      console.log(
-        'filtered, length, lastStatue',
-        filtered,
-        filtered.length,
-        lastStatus,
-      );
       this.setState({
         lastStatus,
       });
@@ -258,7 +252,6 @@ class MainCase extends Component {
 
   render() {
     const {cases, navigation, myProcessItem} = this.props;
-    console.log('myProcessItem', myProcessItem);
     return (
       <View style={styles.container}>
         {cases.trademark_title === 'image' ? (
@@ -291,7 +284,7 @@ class MainCase extends Component {
                   {this.state.dateText}
                 </Text>
                 <Text style={{fontWeight: '100', fontSize: 13}}>
-                  선택된 업종:
+                  신청 업종:
                 </Text>
                 <Text style={{fontWeight: '600', fontSize: 15}}>
                   {cases.products}
@@ -363,7 +356,7 @@ class MainCase extends Component {
                   {this.state.dateText}
                 </Text>
                 <Text style={{fontWeight: '100', fontSize: 13}}>
-                  선택된 업종:
+                  신청 업종:
                 </Text>
                 <Text style={{fontWeight: '600', fontSize: 15}}>
                   {cases.products}
@@ -418,6 +411,7 @@ class MainCase extends Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    paddingVertical: 10,
   },
   item: {
     backgroundColor: '#FAFAFA',

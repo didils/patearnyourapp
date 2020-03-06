@@ -13,9 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const {width} = Dimensions.get('window');
 
 class CaseInfoScreen2 extends Component {
-  componentDidMount() {
-    console.log('pdf screen prop', this.props);
-  }
+  componentDidMount() {}
   render() {
     const {
       navigation,

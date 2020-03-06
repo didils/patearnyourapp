@@ -25,6 +25,9 @@ class LogInScreen1 extends Component {
 
   componentDidMount = () => {
     this.guestLogin();
+    this.setState({
+      username: '',
+    });
   };
 
   render() {
@@ -190,7 +193,6 @@ class LogInScreen1 extends Component {
             guest_token: json.token,
           });
         }
-        console.log(this.state.guest_token);
       });
   };
 }

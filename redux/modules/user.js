@@ -52,7 +52,6 @@ function login(username, password) {
     })
       .then(response => response.json())
       .then(json => {
-        console.log(json);
         if (json.token && json.user) {
           dispatch(setLogIn(json.token));
           dispatch(setUser(json.user));
@@ -82,7 +81,6 @@ function createAccount(username, password, email, name, phone) {
     })
       .then(response => response.json())
       .then(json => {
-        console.log('create account 내부의 json', json);
         if (json.token) {
           dispatch(setLogIn(json.token));
           dispatch(setUser(json.user));
@@ -151,6 +149,7 @@ function applyLogOut(state) {
     isLoggedIn: false,
     isCase: false,
     token: '',
+    profile: [],
   };
 }
 

@@ -55,7 +55,6 @@ class Container extends Component {
         name,
         phone,
       );
-      console.log('createAccountResult', createAccountResult);
       if (!createAccountResult) {
         Alert.alert('아이디 또는 비밀번호를 다시 확인해 주세요');
         this.setState({isSubmitting: false});

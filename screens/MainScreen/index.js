@@ -12,6 +12,8 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: user.isLoggedIn,
     myCase: cases.myCase,
     myProcessItem: cases.myProcessItem,
+    profile: user.profile,
+    user,
   };
 };
 

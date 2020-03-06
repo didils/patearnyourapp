@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useReducer} from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ const {width} = Dimensions.get('window');
 
 class MainScreen extends Component {
   render() {
+    const {navigation, user} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -133,7 +134,7 @@ class MainScreen extends Component {
                 유용한 정보
               </Text>
             </View>
-            <TouchableOpacity onPress={() => console.log('chekc')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Inform1')}>
               <View style={styles.mainBtnBottom}>
                 <View
                   style={{
@@ -148,7 +149,7 @@ class MainScreen extends Component {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log('chekc')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Inform2')}>
               <View style={styles.mainBtnBottom}>
                 <View
                   style={{
@@ -163,7 +164,7 @@ class MainScreen extends Component {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log('chekc')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Inform3')}>
               <View style={styles.mainBtnBottom}>
                 <View
                   style={{
@@ -178,7 +179,7 @@ class MainScreen extends Component {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log('chekc')}>
+            {/* <TouchableOpacity onPress={() => navigation.navigate('Inform4')}>
               <View
                 style={{
                   backgroundColor: 'white',
@@ -197,7 +198,7 @@ class MainScreen extends Component {
                   <Text style={styles.textBtnBottom}>누가 관리해 주나요?</Text>
                 </View>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <View
             style={{
@@ -220,10 +221,67 @@ class MainScreen extends Component {
               </Text>
               <ReviewItem
                 uri={require('../../assets/images/4020160108616.jpg')}
-                comment={'정말 간편하고 좋았어요.'}
+                comment={
+                  '신청하는데 어렵지도 않고, 신뢰할 수 있어 좋은 것 같습니다. 번창하세요~!'
+                }
+                product={'Youtuber/Creator'}
               />
+              <ReviewItem
+                uri={require('../../assets/images/4120160040231.jpg')}
+                comment={
+                  '진짜 열심히 해주시는게 느껴졌습니다. 주변에 많이 추천할께요~~ 감사합니다!'
+                }
+                product={'네일샵'}
+              />
+              <ReviewItem
+                uri={require('../../assets/images/logo.jpeg')}
+                comment={
+                  '가격은 다른데 더 싼 곳들 많이 있긴 하지만, 여기가 더 편리하고 좋은듯 ㅎㅎ 주변에 많이 추천할께요~~ 감사합니다!'
+                }
+                product={'카페'}
+              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginVertical: 20,
+                }}>
+                <Text style={{color: 'grey', fontSize: 17, fontWeight: '200'}}>
+                  후기 더보기
+                </Text>
+                <Icon
+                  name={'ios-arrow-down'}
+                  color={'grey'}
+                  size={16}
+                  style={{marginLeft: 13}}
+                />
+              </View>
             </View>
           </View>
+          {this.props.profile &&
+            this.props.profile.email === 'didils1982@gmail.com' && (
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('Manage1', {
+                    token: user.token,
+                  })
+                }>
+                <View
+                  style={{
+                    backgroundColor: MAIN_COLOR,
+                    borderRadius: 5,
+                    width: width / 2,
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{fontSize: 20, fontWeight: '300', color: 'white'}}>
+                    관리자 메뉴
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
           <View style={{height: 100, backgroundColor: '#fAFAFA', width}}></View>
         </ScrollView>
       </View>

@@ -46,7 +46,6 @@ class AskScreen4 extends Component {
     }
   };
   render() {
-    console.log(this.props);
     const {navigation} = this.props;
     const {
       route: {
@@ -131,7 +130,7 @@ class AskScreen4 extends Component {
           </View>
           <View
             style={{flex: 2, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={[styles.explain, {fontSize: 16}]}>선택된 업종:</Text>
+            <Text style={[styles.explain, {fontSize: 16}]}>신청 업종:</Text>
             <Text style={[styles.explain, {fontWeight: '600'}]}>
               {selected}
             </Text>

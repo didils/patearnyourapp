@@ -83,7 +83,7 @@ class AskScreen3 extends Component {
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity
-            onPressOut={() => this._iconNavigate('유튜버/크리에이터')}>
+            onPressOut={() => this._iconNavigate('Youtuber/Creator')}>
             <View style={styles.circle}>
               <Icon
                 name={'logo-youtube'}
@@ -91,7 +91,7 @@ class AskScreen3 extends Component {
                 color={'red'}
                 style={{marginRight: 10}}
               />
-              <Text style={styles.text}>유튜버/크리에이터</Text>
+              <Text style={styles.text}>Youtuber/Creator</Text>
             </View>
           </TouchableOpacity>
           <View style={styles.mainCategory}>
@@ -222,7 +222,6 @@ class AskScreen3 extends Component {
     });
   };
   _iconNavigate = selected => {
-    console.log('selected', selected);
     const {
       route: {
         params: {logoType, logo},

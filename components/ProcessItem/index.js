@@ -195,7 +195,6 @@ class ProcessItem extends Component {
                   <View style={{alignItems: 'flex-end'}}>
                     <TouchableOpacity
                       onPress={() => {
-                        console.log('items.file_pdf', items.file_pdf);
                         navigation.navigate('CaseInfo2', {
                           file_pdf: items.file_pdf,
                         });
@@ -219,7 +218,6 @@ class ProcessItem extends Component {
                   <View style={{alignItems: 'flex-end'}}>
                     <TouchableOpacity
                       onPress={() => {
-                        console.log('items.file_pdf', items.file_pdf);
                         navigation.navigate('CaseInfo2', {
                           file_pdf: items.file_pdf,
                         });
@@ -244,7 +242,6 @@ class ProcessItem extends Component {
                     <View style={{alignItems: 'flex-end'}}>
                       <TouchableOpacity
                         onPress={() => {
-                          console.log('items.file_pdf', items.file_pdf);
                           navigation.navigate('CaseInfo2', {
                             file_pdf: items.file_pdf,
                           });
@@ -306,7 +303,6 @@ class ProcessItem extends Component {
                       }}>
                       <TouchableOpacity
                         onPress={() => {
-                          console.log('items.file_pdf', items.file_pdf);
                           navigation.navigate('CaseInfo2', {
                             file_pdf: items.file_pdf,
                             payButton: true,

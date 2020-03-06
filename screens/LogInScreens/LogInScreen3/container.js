@@ -38,7 +38,7 @@ class Container extends Component {
           this.setState({
             isSubmitting: false,
           });
-          navigation.navigate('Main');
+          navigation.navigate('Stack');
           this.props.setUser(json.user);
           this.props.setLogIn(json.token);
         }, 800);

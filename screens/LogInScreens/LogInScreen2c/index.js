@@ -88,15 +88,12 @@ class LogInScreen2c extends Component {
   };
 
   _searchByEmail = () => {
-    console.log('search by email 내부의 this.props', this.props);
     const {email} = this.state;
     const {
       route: {
         params: {guest_token},
       },
     } = this.props;
-
-    console.log('search by email 내부의 guest_token', guest_token);
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (reg.test(email) === false) {
       Alert.alert('정확한 이메일 주소를 입력해 주세요.');
@@ -110,7 +107,6 @@ class LogInScreen2c extends Component {
           return response.json();
         })
         .then(json => {
-          console.log('search by email 내부의 json', json);
           if (json.length === 0) {
             this._submit();
           } else {
