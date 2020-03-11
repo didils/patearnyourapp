@@ -27,8 +27,6 @@ let settings = {
   },
 };
 
-// ChannelIO.boot(settings).then(result => {});
-
 export default class App extends Component {
   constructor(props) {
     super(props);

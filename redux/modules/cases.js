@@ -47,6 +47,85 @@ function logOut() {
 
 // API Actions
 
+function uploadFastExam(images, identification_number, pdf) {
+  const data = new FormData();
+  data.append('shorted_exam', true);
+  var ins = images.length;
+  if (ins !== 0) {
+    for (var x = 0; x < ins; x++) {
+      data.append(`image${x}`, {
+        uri: images[x].path,
+        type: 'image/jpeg',
+        name: `${uuidv1()}.png`,
+      });
+    }
+  }
+  if (pdf !== null) {
+    data.append('pdf', {
+      uri: pdf.uri,
+      type: 'application/pdf',
+      name: pdf.name,
+    });
+  }
+  return (dispatch, getState) => {
+    const {
+      user: {token},
+    } = getState();
+    return fetch(
+      `${API_URL}/cases/fastexamupload/?identification_number=${identification_number}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `JWT ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        body: data,
+      },
+    ).then(response => {
+      if (response.status === 401) {
+        dispatch(userActions.logOut());
+      } else if (response.ok) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  };
+}
+
+function uploadProcessItem(identification_number) {
+  const data = new FormData();
+  data.append('current_status', '출원 준비');
+  data.append('descriptions', '출원서를 준비 중입니다.');
+  data.append('estimate_time', '약 1~2일 소요됩니다.');
+  console.log('redux uploadProcessItem function data', data);
+  return (dispatch, getState) => {
+    const {
+      user: {token},
+    } = getState();
+    return fetch(
+      `${API_URL}/process_items/upload/?identification_number=${identification_number}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `JWT ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        body: data,
+      },
+    ).then(response => {
+      if (response.status === 401) {
+        dispatch(userActions.logOut());
+      } else if (response.ok) {
+        console.log('redux uploadProcessItem function response', response);
+        return true;
+      } else {
+        return false;
+      }
+    });
+  };
+}
+
 function getCases() {
   return (dispatch, getState) => {
     const {
@@ -65,7 +144,10 @@ function getCases() {
           return response.json();
         }
       })
-      .then(json => dispatch(setMyCase(json)))
+      .then(json => {
+        console.log(json);
+        dispatch(setMyCase(json));
+      })
       .catch(function() {
         console.log('Promise Rejected');
       });
@@ -226,6 +308,8 @@ const actionCreators = {
   getProcessItems,
   getAllCases,
   getAllProcessItems,
+  uploadFastExam,
+  uploadProcessItem,
 };
 
 export {actionCreators};

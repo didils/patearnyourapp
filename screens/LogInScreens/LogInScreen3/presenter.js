@@ -13,12 +13,19 @@ import {
 } from 'react-native';
 import {API_URL, MAIN_COLOR, TEXT_COLOR} from '../../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PopUpComponent from '../../../components/PopUpComponent';
 
 const {width, height} = Dimensions.get('window');
 
 class LogInScreen3 extends Component {
   render() {
-    const {navigation, submit} = this.props;
+    const {
+      navigation,
+      submit,
+      route: {
+        params: {username, catchFromAsk},
+      },
+    } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -70,6 +77,20 @@ class LogInScreen3 extends Component {
             )}
           </TouchableOpacity>
         </View>
+        <PopUpComponent
+          title={'로그인 성공'}
+          body={'다시 온 것을 환영합니다.'}
+          hide={this.props.hide}
+          onConfirm={() => {
+            this.props.hidePopup();
+            if (catchFromAsk) {
+              navigation.navigate('Ask1');
+            } else {
+              navigation.navigate('Main');
+            }
+          }}
+          onCancel={() => this.props.hidePopup()}
+        />
       </View>
     );
   }

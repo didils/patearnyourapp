@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MAIN_COLOR, TEXT_COLOR} from '../../../constants';
+import {ChannelIO} from 'react-native-channel-plugin';
 
 const {width, height} = Dimensions.get('window');
 class AskScreen1 extends Component {
@@ -17,7 +18,11 @@ class AskScreen1 extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPressOut={() => navigation.navigate('Main')}>
+          <TouchableOpacity
+            onPressOut={() => {
+              navigation.navigate('Main');
+              ChannelIO.show(true);
+            }}>
             <View style={styles.menuIcon}>
               <Icon name="ios-arrow-back" size={26} color="black" />
             </View>
@@ -74,7 +79,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
-    paddingTop: 5,
   },
   header: {
     backgroundColor: 'white',

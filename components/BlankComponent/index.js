@@ -2,7 +2,8 @@ import {connect} from 'react-redux';
 import container from './container';
 
 // redux 연결 시
-// import { actionCreators as userAction } from "../../redux/modules/user";
+// import { actionCreators as userAction } from "경로";
+// import { actionCreators as caseAction } from "경로";
 
 // const mapStateToProps = (state, ownProps) => {
 //     return {

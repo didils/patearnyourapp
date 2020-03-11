@@ -5,9 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Animated,
 } from 'react-native';
 import {TEXT_COLOR, MAIN_COLOR} from '../../constants';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {array} from 'prop-types';
 
 const {width} = Dimensions.get('window');
 
@@ -16,30 +18,38 @@ class ProcessItem extends Component {
     x: 0,
     y: 0,
     componentHeight: 0,
-    pointColor: 'lightgrey',
     passed: false,
+    animation: new Animated.Value(0),
   };
   componentDidMount() {
-    const {index} = this.props;
-    if (index === -2) {
-      this.setState({
-        pointColor: 'lightgrey',
-      });
-    } else if (index !== -2) {
-      if (index + 1 === this.props.array.length) {
-        this.setState({
-          pointColor: MAIN_COLOR,
-        });
-      }
-      if (this.props.array.length && index + 2 === this.props.array.length) {
-        this.setState({
-          passed: true,
-        });
-      }
-    }
+    Animated.loop(
+      Animated.timing(this.state.animation, {
+        toValue: 1,
+        duration: 2500,
+      }),
+    ).start();
   }
   render() {
-    const {items, navigation} = this.props;
+    const {items, navigation, pointed} = this.props;
+
+    const yellow = '#ffeaa7';
+
+    const progressInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0%', '100%'],
+      extrapolate: 'clamp',
+    });
+    const colorInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [yellow, MAIN_COLOR, yellow],
+      extrapolate: 'clamp',
+    });
+
+    const progressStyle = {
+      width: progressInterpolate,
+      bottom: 0,
+      backgroundColor: colorInterpolate,
+    };
     return (
       <View>
         <View
@@ -70,17 +80,17 @@ class ProcessItem extends Component {
               width: (width * 7) / 36,
               alignItems: 'center',
             }}>
-            <View
+            <Animated.View
               style={{
                 width: (width * 3) / 36,
                 height: (width * 3) / 36,
                 borderRadius: (width * 1.5) / 36,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: this.state.pointColor,
+                backgroundColor: pointed ? colorInterpolate : 'lightgrey',
               }}>
               <View style={styles.circleInside}></View>
-            </View>
+            </Animated.View>
           </View>
           <View style={{width: (width * 29) / 36}}>
             <View
@@ -94,14 +104,14 @@ class ProcessItem extends Component {
             </View>
             {items.process_date !== null && items.process_date !== '' && (
               <View style={{height: width / 12}}>
-                <Text
+                <Animated.Text
                   style={{
                     fontSize: 20,
                     fontWeight: 'bold',
-                    color: this.state.pointColor,
+                    color: pointed ? colorInterpolate : 'lightgrey',
                   }}>
                   {items.process_date}
-                </Text>
+                </Animated.Text>
               </View>
             )}
             {items.current_status !== '신청 완료' && (
@@ -119,7 +129,7 @@ class ProcessItem extends Component {
                     style={{
                       fontSize: 20,
                       fontWeight: 'bold',
-                      color: this.state.pointColor,
+                      color: pointed ? MAIN_COLOR : 'lightgrey',
                       marginBottom: width / 36,
                     }}>
                     {items.estimate_time}
@@ -134,6 +144,17 @@ class ProcessItem extends Component {
                       marginBottom: width / 36,
                     }}>
                     {`예상일은 ${items.expected_date}입니다.`}
+                  </Text>
+                )}
+                {items.current_status === '상표 출원 완료' && (
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontWeight: '100',
+                      color: 'black',
+                      lineHeight: 20,
+                    }}>
+                    특허청에 출원서 제출이 완료되었습니다.
                   </Text>
                 )}
                 {items.descriptions !== '' && items.descriptions !== null && (
@@ -179,6 +200,11 @@ class ProcessItem extends Component {
                             100}%`,
                           paddingLeft: 7,
                         }}>
+                        <Animated.View
+                          style={[
+                            styles.progressBar,
+                            progressStyle,
+                          ]}></Animated.View>
                         {(items.waiting_order / items.waiting_total) * 100 >
                           25 && (
                           <Text
@@ -296,16 +322,16 @@ class ProcessItem extends Component {
                   </View>
                 )}
                 {items.is_pay_required === true &&
-                  items.current_status === '검토 완료' && (
+                  this.props.last_status === '검토 완료' && (
                     <View
                       style={{
                         alignItems: 'flex-end',
                       }}>
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate('CaseInfo2', {
-                            file_pdf: items.file_pdf,
-                            payButton: true,
+                          navigation.navigate('File1', {
+                            identification_number: this.props
+                              .identification_number,
                           });
                         }}>
                         <View
@@ -426,6 +452,11 @@ const styles = StyleSheet.create({
     borderRadius: (width * 1.5) / 85,
     borderColor: 'white',
     borderWidth: 2,
+  },
+  progressBar: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
   },
 });
 

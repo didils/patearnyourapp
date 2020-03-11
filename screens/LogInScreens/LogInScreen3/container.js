@@ -7,6 +7,7 @@ class Container extends Component {
     password: '',
     isFocused: false,
     isSubmitting: false,
+    hide: true,
   };
   render() {
     return (
@@ -17,9 +18,21 @@ class Container extends Component {
         changePassword={this._changePassword}
         {...this.state}
         submit={this._submit}
+        showPopup={this._showPopup}
+        hidePopup={this._hidePopup}
       />
     );
   }
+  _showPopup = () => {
+    this.setState({
+      hide: false,
+    });
+  };
+  _hidePopup = () => {
+    this.setState({
+      hide: true,
+    });
+  };
   _submit = async () => {
     const {password, isSubmitting} = this.state;
     const {
@@ -38,7 +51,7 @@ class Container extends Component {
           this.setState({
             isSubmitting: false,
           });
-          navigation.navigate('Stack');
+          navigation.navigate('Main');
           this.props.setUser(json.user);
           this.props.setLogIn(json.token);
         }, 800);
@@ -54,13 +67,10 @@ class Container extends Component {
             Alert.alert('아이디 또는 비밀번호를 다시 확인해 주세요');
             this.setState({isSubmitting: false});
           } else {
-            Alert.alert('로그인 성공');
-            this.setState({isSubmitting: false});
-            if (catchFromAsk) {
-              navigation.navigate('Ask1');
-            } else {
-              navigation.navigate('Stack');
-            }
+            this.setState({
+              isSubmitting: false,
+              hide: false,
+            });
           }
         } else {
           Alert.alert('비밀번호를 입력해 주세요');

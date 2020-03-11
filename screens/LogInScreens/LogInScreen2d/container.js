@@ -7,6 +7,7 @@ class Container extends Component {
     phone: '010',
     isSubmitting: false,
     isFocused: false,
+    hide: true,
   };
   render() {
     return (
@@ -17,9 +18,26 @@ class Container extends Component {
         onFocus={this._onFocus}
         onOutFocus={this._onOutFocus}
         changePhone={this._changePhone}
+        hide={this.state.hide}
+        showPopup={this._showPopup}
+        hidePopup={this._hidePopup}
       />
     );
   }
+
+  _hidePopup = () => {
+    this.setState({
+      hide: true,
+    });
+  };
+
+  _showPopup = () => {
+    console.log('shiw popup');
+    this.setState({
+      hide: false,
+    });
+  };
+
   _onFocus = () => {
     this.setState({
       isFocused: true,
@@ -59,8 +77,7 @@ class Container extends Component {
         Alert.alert('아이디 또는 비밀번호를 다시 확인해 주세요');
         this.setState({isSubmitting: false});
       } else {
-        Alert.alert('회원 가입이 완료되었습니다.');
-        navigation.navigate('Main');
+        this._showPopup();
       }
     }
   };

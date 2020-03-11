@@ -14,16 +14,17 @@ const {width, height} = Dimensions.get('window');
 
 class FastExamScreen1 extends Component {
   render() {
-    const {navigation} = this.props;
-    // const { navigation } = this.props;
-    // const success = navigation.getParam("success");
-    // const imp_uid = navigation.getParam("imp_uid");
-    // const merchant_uid = navigation.getParam("merchant_uid");
+    const {
+      navigation,
+      route: {
+        params: {identification_number},
+      },
+    } = this.props;
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPressOut={() => navigation.navigate('Main')}>
+          <TouchableOpacity onPressOut={() => navigation.goBack(null)}>
             <View style={styles.menuIcon}>
               <Icon name="ios-arrow-back" size={26} color="black" />
             </View>
@@ -47,12 +48,22 @@ class FastExamScreen1 extends Component {
         <View style={styles.btnContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPressOut={() => navigation.navigate('FastExam2')}>
+            onPressOut={() =>
+              navigation.navigate('FastExam2', {
+                identification_number,
+                isUsing: true,
+              })
+            }>
             <Text style={styles.btnText}>사용 중 또는 곧 사용 예정입니다</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPressOut={() => navigation.navigate('Ask2a')}>
+            onPressOut={() =>
+              navigation.navigate('FastExam2', {
+                identification_number,
+                isUsing: false,
+              })
+            }>
             <Text style={styles.btnText}>타인과 분쟁 중 입니다</Text>
           </TouchableOpacity>
         </View>

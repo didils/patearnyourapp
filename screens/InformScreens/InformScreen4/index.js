@@ -20,7 +20,12 @@ class InformScreen4 extends Component {
     ChannelIO.hide(true);
   }
   render() {
-    const {navigation} = this.props;
+    const {
+      navigation,
+      route: {
+        params: {identification_number},
+      },
+    } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -30,7 +35,7 @@ class InformScreen4 extends Component {
               navigation.goBack(null);
             }}>
             <View style={styles.menuIcon}>
-              <Icon name="ios-close" size={30} color="black" />
+              <Icon name="md-close" size={30} color="black" />
             </View>
           </TouchableOpacity>
           <Image
@@ -87,7 +92,11 @@ class InformScreen4 extends Component {
           <View style={styles.btnContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPressOut={() => navigation.navigate('FastExam1')}>
+              onPressOut={() =>
+                navigation.navigate('FastExam1', {
+                  identification_number,
+                })
+              }>
               <Text style={styles.btnText}>우선심사신청</Text>
             </TouchableOpacity>
           </View>

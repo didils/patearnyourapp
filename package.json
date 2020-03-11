@@ -21,6 +21,7 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-channel-plugin": "^0.3.9",
+    "react-native-document-picker": "^3.2.4",
     "react-native-firebase": "^5.6.0",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-image-crop-picker": "^0.28.0",

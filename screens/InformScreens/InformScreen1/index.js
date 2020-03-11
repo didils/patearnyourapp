@@ -6,6 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MAIN_COLOR, TEXT_COLOR} from '../../../constants';
@@ -16,9 +17,6 @@ import {ChannelIO} from 'react-native-channel-plugin';
 const {width, height} = Dimensions.get('window');
 
 class InformScreen1 extends Component {
-  componentDidMount() {
-    ChannelIO.hide(true);
-  }
   render() {
     const {navigation} = this.props;
     return (
@@ -30,7 +28,7 @@ class InformScreen1 extends Component {
               navigation.goBack(null);
             }}>
             <View style={styles.menuIcon}>
-              <Icon name="ios-close" size={30} color="black" />
+              <Icon name="md-close" size={30} color="black" />
             </View>
           </TouchableOpacity>
           <Image

@@ -31,7 +31,7 @@ class AskScreen3 extends Component {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.menuIcon}
-            onPressOut={() => navigation.goBack(null)}>
+            onPress={() => navigation.goBack(null)}>
             <Icon name="ios-arrow-back" size={26} color="black" />
           </TouchableOpacity>
           <Image
@@ -83,7 +83,7 @@ class AskScreen3 extends Component {
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity
-            onPressOut={() => this._iconNavigate('Youtuber/Creator')}>
+            onPress={() => this._iconNavigate('Youtuber/Creator')}>
             <View style={styles.circle}>
               <Icon
                 name={'logo-youtube'}
@@ -95,7 +95,7 @@ class AskScreen3 extends Component {
             </View>
           </TouchableOpacity>
           <View style={styles.mainCategory}>
-            <TouchableOpacity onPressOut={this._changeExtend1}>
+            <TouchableOpacity onPress={this._changeExtend1}>
               <View style={styles.mainItem}>
                 <Text style={styles.mainText}>요식업</Text>
                 <Icon name={'ios-arrow-down'} size={20} />
@@ -120,9 +120,9 @@ class AskScreen3 extends Component {
           </View>
 
           <View style={styles.mainCategory}>
-            <TouchableOpacity onPressOut={this._changeExtend2}>
+            <TouchableOpacity onPress={this._changeExtend2}>
               <View style={styles.mainItem}>
-                <Text style={styles.mainText}>뷰티/미용</Text>
+                <Text style={styles.mainText}>패션/뷰티</Text>
                 <Icon name={'ios-arrow-down'} size={20} />
               </View>
               {this.state.isExpended2 ? (
@@ -136,7 +136,7 @@ class AskScreen3 extends Component {
                     iconNavigate={this._iconNavigate}
                   />
                   <ItemIcon
-                    itemName={'blank'}
+                    itemName={'옷가게'}
                     iconNavigate={this._iconNavigate}
                   />
                 </View>
@@ -144,7 +144,7 @@ class AskScreen3 extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.mainCategory}>
-            <TouchableOpacity onPressOut={this._changeExtend3}>
+            <TouchableOpacity onPress={this._changeExtend3}>
               <View style={styles.mainItem}>
                 <Text style={styles.mainText}>운동/피트니스</Text>
                 <Icon name={'ios-arrow-down'} size={20} />

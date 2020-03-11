@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {TEXT_COLOR, MAIN_COLOR} from '../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {ChannelIO} from 'react-native-channel-plugin';
 
 const {width} = Dimensions.get('window');
 
@@ -19,7 +20,18 @@ class MainCase extends Component {
     lastStatus: '등록 가능성 검토중',
   };
   componentDidMount = () => {
-    const {cases, myProcessItem} = this.props;
+    const {
+      cases,
+      cases: {process_item_set},
+    } = this.props;
+
+    if (process_item_set && process_item_set.length !== 0) {
+      const lastStatus = process_item_set[0].current_status;
+      this.setState({
+        lastStatus,
+      });
+    }
+
     const date = new Date().getDate(); //Current Date
     const month = new Date().getMonth() + 1; //Current Month
     const year = new Date().getFullYear(); //Current Year
@@ -28,27 +40,6 @@ class MainCase extends Component {
     const askDate = Number(cases.request_date.substr(8, 2));
     const currentFullDate = new Date(year, month - 1, date);
     const askFullDate = new Date(askYear, askMonth - 1, askDate);
-    const filtered = myProcessItem
-      .reverse()
-      .sort(function(a, b) {
-        if (a.process_date > b.process_date) {
-          return 1;
-        }
-        if (a.process_date < b.process_date) {
-          return -1;
-        }
-        // a must be equal to b
-        return 0;
-      })
-      .filter(
-        el => el.case.identification_number === cases.identification_number,
-      );
-    if (filtered.length !== 0) {
-      const lastStatus = filtered[filtered.length - 1].current_status;
-      this.setState({
-        lastStatus,
-      });
-    }
 
     var date_diff_indays = function(date1, date2) {
       return Math.floor(
@@ -251,7 +242,7 @@ class MainCase extends Component {
   };
 
   render() {
-    const {cases, navigation, myProcessItem} = this.props;
+    const {cases, navigation} = this.props;
     return (
       <View style={styles.container}>
         {cases.trademark_title === 'image' ? (
@@ -307,14 +298,14 @@ class MainCase extends Component {
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={() =>
+                onPress={() => {
+                  ChannelIO.hide(true);
                   navigation.navigate('CaseInfo1', {
                     cases: this.props.cases,
                     dateText: this.state.dateText,
                     dateText2: this.state.dateText2,
-                    myProcessItem: this.props.myProcessItem,
-                  })
-                }>
+                  });
+                }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -375,18 +366,18 @@ class MainCase extends Component {
                   현재 진행 상태:
                 </Text>
                 <Text style={{color: MAIN_COLOR, fontSize: 15}}>
-                  {this.state.lastStatus}
+                  {cases.progress_status}
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={() =>
+                onPress={() => {
+                  ChannelIO.hide(true);
                   navigation.navigate('CaseInfo1', {
                     cases: this.props.cases,
                     dateText: this.state.dateText,
                     dateText2: this.state.dateText2,
-                    myProcessItem: this.props.myProcessItem,
-                  })
-                }>
+                  });
+                }}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text
                     style={{

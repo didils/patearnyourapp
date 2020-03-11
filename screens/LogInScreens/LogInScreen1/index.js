@@ -9,10 +9,12 @@ import {
   Image,
   ActivityIndicator,
   Alert,
-  KeyboardAvoidingView,
+  Keyboard,
 } from 'react-native';
 import {API_URL, MAIN_COLOR, TEXT_COLOR} from '../../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PopUpComponent from '../../../components/PopUpComponent';
+import {ChannelIO} from 'react-native-channel-plugin';
 
 const {width, height} = Dimensions.get('window');
 
@@ -21,6 +23,7 @@ class LogInScreen1 extends Component {
     username: '',
     isFocused: false,
     isSubmitting: false,
+    hide: true,
   };
 
   componentDidMount = () => {
@@ -37,12 +40,16 @@ class LogInScreen1 extends Component {
         params: {catchFromAsk},
       },
     } = this.props;
+    const {username} = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.menuIcon}
-            onPressOut={() => navigation.goBack(null)}>
+            onPressOut={() => {
+              navigation.goBack(null);
+              ChannelIO.show(true);
+            }}>
             <Icon name="ios-arrow-back" size={26} color="black" />
           </TouchableOpacity>
           <Image
@@ -57,13 +64,13 @@ class LogInScreen1 extends Component {
           </Text>
           <TextInput
             placeholder="아이디"
-            autoFocus={true}
             style={[
               styles.textInput,
               this.state.isFocused ? styles.focused : styles.unFocused,
             ]}
             autoCapitalize={'none'}
             autoCorrect={false}
+            autoFocus={true}
             value={this.state.username}
             onChangeText={this._changeUsername}
             returnKeyType={'next'}
@@ -85,6 +92,22 @@ class LogInScreen1 extends Component {
             )}
           </TouchableOpacity>
         </View>
+        <PopUpComponent
+          title={'등록되어 있지 않습니다.'}
+          body={'회원 가입 하시겠습니까?'}
+          hide={this.state.hide}
+          onConfirm={() => {
+            this.setState({hide: true});
+            {
+              navigation.navigate('LogIn2', {
+                catchFromAsk,
+                username,
+                guest_token: this.state.guest_token,
+              });
+            }
+          }}
+          onCancel={() => this.setState({hide: true})}
+        />
       </View>
     );
   }
@@ -139,27 +162,10 @@ class LogInScreen1 extends Component {
             }
           });
         if (fetchResult) {
-          Alert.alert(
-            '등록되어 있지 않습니다.',
-            '회원가입 하시겠습니까?',
-            [
-              {
-                text: '취소',
-                style: 'cancel',
-              },
-              {
-                text: '확인',
-                onPress: () => {
-                  navigation.navigate('LogIn2', {
-                    catchFromAsk,
-                    username,
-                    guest_token: this.state.guest_token,
-                  });
-                },
-              },
-            ],
-            {cancelable: true},
-          );
+          this.setState({
+            hide: false,
+          });
+          Keyboard.dismiss();
         } else {
           navigation.navigate('LogIn3', {
             username: this.state.username,

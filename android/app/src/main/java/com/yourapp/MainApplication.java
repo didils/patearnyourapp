@@ -20,6 +20,7 @@ import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; // RN firebas
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage; // RN firebase cloud message notification
 import com.iamport.IamportPackage; // 아임포트 패키지를 불러옵니다.
 import com.reactnativecommunity.webview.RNCWebViewPackage; // 리액트 네이티브 웹뷰 패키지를 불러옵니다.
+import io.github.elyx0.reactnativedocumentpicker.DocumentPickerPackage; // Import package
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 

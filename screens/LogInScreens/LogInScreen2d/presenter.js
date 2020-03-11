@@ -7,12 +7,12 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
-  ActivityIndicator,
-  Alert,
+  Keyboard,
 } from 'react-native';
 import {API_URL, MAIN_COLOR, TEXT_COLOR} from '../../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TextInputMask} from 'react-native-masked-text';
+import PopUpComponent from '../../../components/PopUpComponent';
 
 const {width, height} = Dimensions.get('window');
 
@@ -49,14 +49,6 @@ class LogInScreen2d extends Component {
             keyboardType="numeric"
             type={'custom'}
             options={{
-              /**
-               * mask: (String | required | default '')
-               * the mask pattern
-               * 9 - accept digit.
-               * A - accept alpha.
-               * S - accept alphanumeric.
-               * * - accept all, EXCEPT white space.
-               */
               mask: '999-9999-9999',
             }}
             value={this.props.phone}
@@ -74,6 +66,23 @@ class LogInScreen2d extends Component {
             <Text style={styles.btnText}>확인</Text>
           </TouchableOpacity>
         </View>
+        <PopUpComponent
+          title={'환영합니다!'}
+          body={'회원 가입이 완료되었습니다.'}
+          hide={this.props.hide}
+          onConfirm={() => {
+            this.props.initApp();
+            this.props.hidePopup();
+            this.props.navigation.navigate('Main');
+            Keyboard.dismiss();
+          }}
+          onCancel={() => {
+            this.props.initApp();
+            this.props.hidePopup();
+            this.props.navigation.navigate('Main');
+            Keyboard.dismiss();
+          }}
+        />
       </View>
     );
   }

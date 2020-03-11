@@ -54,6 +54,7 @@ target 'YourApp' do
   pod 'IamportReactNative', :path => '../node_modules/iamport-react-native'
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+  pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 

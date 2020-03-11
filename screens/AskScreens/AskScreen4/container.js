@@ -1,28 +1,51 @@
 import React, {Component} from 'react';
 import AskScreen4 from './presenter';
-import {Alert} from 'react-native';
+import {Alert, View} from 'react-native';
 import uuidv1 from 'uuid/v1';
 import {API_URL} from '../../../constants';
 import {actionCreators as userActions} from '../../../redux/modules/user';
 
 class Container extends Component {
+  state = {
+    hide: true,
+    isSubmitted: false,
+  };
   render() {
     return (
       <AskScreen4
         {...this.props}
         onPressConfirm={this._onPressConfirm}
         uploadCase={this._uploadCase}
+        showPopup={this._showPopup}
+        hidePopup={this._hidePopup}
+        {...this.state}
       />
     );
   }
+
+  _hidePopup = () => {
+    this.setState({
+      hide: true,
+    });
+  };
+
+  _showPopup = () => {
+    console.log('shiw popup');
+    this.setState({
+      hide: false,
+    });
+  };
+
   _onPressConfirm = async () => {
     const {
       route: {
         params: {logoType, logo, selected},
       },
-      getCases,
     } = this.props;
     if (logoType === 'text') {
+      this.setState({
+        isSubmitted: true,
+      });
       let trademark_title = logo;
       const uploadResult = await this._uploadCase(
         null,
@@ -30,22 +53,31 @@ class Container extends Component {
         trademark_title,
       );
       if (uploadResult) {
-        getCases();
-        Alert.alert('신청이 완료되었습니다!');
-        this.props.changeToCase();
-        this.props.navigation.navigate('Main');
+        this.setState({
+          hide: false,
+          isSubmitted: false,
+        });
       } else {
+        this.setState({
+          isSubmitted: false,
+        });
         Alert.alert('오류가 발생했습니다. 다시 시도해 주세요.');
       }
     } else {
+      this.setState({
+        isSubmitted: true,
+      });
       let file = logo;
       const uploadResult = await this._uploadCase(file, selected, 'image');
       if (uploadResult) {
-        getCases();
-        Alert.alert('신청이 완료되었습니다!');
-        this.props.changeToCase();
-        this.props.navigation.navigate('Main');
+        this.setState({
+          hide: false,
+          isSubmitted: false,
+        });
       } else {
+        this.setState({
+          isSubmitted: false,
+        });
         Alert.alert('오류가 발생했습니다. 다시 시도해 주세요.');
       }
     }
@@ -55,7 +87,7 @@ class Container extends Component {
     data.append('products', products);
     data.append('trademark_title', trademark_title);
     data.append('identification_number', `${uuidv1()}`);
-    data.append('progress_status', '결제 대기 중');
+    data.append('progress_status', '등록 가능성 검토 중');
     if (file !== null) {
       data.append('file', {
         uri: file,

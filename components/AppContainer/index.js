@@ -17,7 +17,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     initApp: () => {
       dispatch(caseAction.getCases());
-      dispatch(caseAction.getProcessItems());
     },
     logOut: () => {
       dispatch(userAction.logOut());

@@ -8,10 +8,10 @@ import {
   Image,
   TextInput,
   Keyboard,
-  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MAIN_COLOR, TEXT_COLOR} from '../../../constants';
+import PopUpComponent from '../../../components/PopUpComponent';
 
 const {width, height} = Dimensions.get('window');
 
@@ -20,6 +20,7 @@ class AskScreen2a extends Component {
     imageSelected: false,
     photo: null,
     trademarkTitle: '',
+    hide: true,
   };
   render() {
     const {navigation} = this.props;
@@ -69,10 +70,14 @@ class AskScreen2a extends Component {
         </View>
         <View style={styles.btnContainer}>
           <TextInput
+            ref={input => {
+              this.secondTextInput = input;
+            }}
             placeholder="상표명을 입력해 주세요. 예) 스타벅스, adidas"
             style={styles.textInput}
             autoCapitalize={'none'}
             autoCorrect={false}
+            autoFocus={true}
             onChangeText={this._changeText}
             value={this.state.trademarkTitle}
             onEndEditing={() => {
@@ -81,6 +86,7 @@ class AskScreen2a extends Component {
             onSubmitEditing={() => {
               Keyboard.dismiss();
             }}
+            blurOnSubmit={false}
           />
           <TouchableOpacity
             style={styles.button}
@@ -88,6 +94,16 @@ class AskScreen2a extends Component {
             <Text style={styles.btnText}>확인</Text>
           </TouchableOpacity>
         </View>
+        <PopUpComponent
+          title={'텍스트를 입력해 주세요.'}
+          body={''}
+          hide={this.state.hide}
+          onConfirm={() => {
+            () => this.secondTextInput.focus();
+            this.setState({hide: true});
+          }}
+          onCancel={() => this.setState({hide: true})}
+        />
       </View>
     );
   }
@@ -99,7 +115,8 @@ class AskScreen2a extends Component {
         logo: trademarkTitle,
       });
     } else {
-      Alert.alert('텍스트를 입력해 주세요.');
+      Keyboard.dismiss();
+      this.setState({hide: false});
     }
   };
   _changeText = text => {

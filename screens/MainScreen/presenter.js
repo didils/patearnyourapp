@@ -12,10 +12,24 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {MAIN_COLOR, TEXT_COLOR} from '../../constants';
 import MainCase from '../../components/MainCase';
 import ReviewItem from '../../components/ReviewItem';
+import {ChannelIO} from 'react-native-channel-plugin';
 
 const {width} = Dimensions.get('window');
 
 class MainScreen extends Component {
+  state = {
+    expectDate: '',
+  };
+
+  componentDidMount() {
+    var dt = new Date();
+    dt.setMonth(dt.getMonth() + 7);
+    const textDate = `${dt.getFullYear()}년 ${dt.getMonth()}월`;
+    this.setState({
+      expectDate: textDate,
+    });
+  }
+
   render() {
     const {navigation, user} = this.props;
     return (
@@ -44,20 +58,7 @@ class MainScreen extends Component {
                 style={{
                   height: width * 0.55,
                 }}>
-                <ScrollView
-                  horizontal={true}
-                  // pagingEnabled={true}
-                  // decelerationRate={0}
-                  // snapToInterval={width * 0.85} //your element width
-                  // snapToAlignment={"start"}
-                  // contentInset={{
-                  //   top: 0,
-                  //   left: width * 0.1,
-                  //   bottom: 0,
-                  //   right: width * 0.1
-                  // }}
-                  // contentContainerStyle={{flex: 1}}
-                >
+                <ScrollView horizontal={true}>
                   <View style={{width: width * 0.05}} />
                   <View
                     style={{
@@ -70,7 +71,6 @@ class MainScreen extends Component {
                           cases={cases}
                           key={index}
                           navigation={this.props.navigation}
-                          myProcessItem={this.props.myProcessItem}
                         />
                       ))}
                   </View>
@@ -83,7 +83,10 @@ class MainScreen extends Component {
                   <Text style={styles.textBtnAdded}>등록하세요.</Text>
                 </View>
                 <TouchableOpacity
-                  onPressOut={() => this.props.navigation.navigate('Ask1')}>
+                  onPressOut={() => {
+                    ChannelIO.hide(true);
+                    this.props.navigation.navigate('Ask1');
+                  }}>
                   <View style={styles.iconContainerAdded}>
                     <Icon
                       name="ios-add"
@@ -97,7 +100,11 @@ class MainScreen extends Component {
               </View>
             </View>
           ) : (
-            <TouchableOpacity onPressOut={this.props.checkLogIn}>
+            <TouchableOpacity
+              onPressOut={() => {
+                ChannelIO.hide(true);
+                this.props.checkLogIn();
+              }}>
               <View style={styles.mainBtn}>
                 <View>
                   <Text style={styles.textBtn}>나만의 브랜드를</Text>
@@ -110,6 +117,30 @@ class MainScreen extends Component {
                     size={29}
                     color="white"
                   />
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    marginTop: 5,
+                  }}>
+                  <Text style={{color: 'white', marginRight: 3}}>
+                    지금 신청 시
+                  </Text>
+                  <View
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: 4,
+                      paddingHorizontal: 5,
+                      paddingVertical: 3,
+                      opacity: 0.7,
+                    }}>
+                    <Text style={{fontWeight: '500'}}>
+                      {this.state.expectDate}
+                    </Text>
+                  </View>
+                  <Text style={{color: 'white', marginLeft: 3}}>등록!</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -134,7 +165,11 @@ class MainScreen extends Component {
                 유용한 정보
               </Text>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Inform1')}>
+            <TouchableOpacity
+              onPress={() => {
+                ChannelIO.hide(true);
+                navigation.navigate('Inform1');
+              }}>
               <View style={styles.mainBtnBottom}>
                 <View
                   style={{
@@ -149,7 +184,11 @@ class MainScreen extends Component {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Inform2')}>
+            <TouchableOpacity
+              onPress={() => {
+                ChannelIO.hide(true);
+                navigation.navigate('Inform2');
+              }}>
               <View style={styles.mainBtnBottom}>
                 <View
                   style={{
@@ -164,7 +203,11 @@ class MainScreen extends Component {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Inform3')}>
+            <TouchableOpacity
+              onPress={() => {
+                ChannelIO.hide(true);
+                navigation.navigate('Inform3');
+              }}>
               <View style={styles.mainBtnBottom}>
                 <View
                   style={{

@@ -6,11 +6,11 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
-  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MAIN_COLOR, TEXT_COLOR} from '../../../constants';
 import ImagePicker from 'react-native-image-crop-picker';
+import PopUpComponent from '../../../components/PopUpComponent';
 
 const {width, height} = Dimensions.get('window');
 
@@ -18,6 +18,7 @@ class AskScreen2 extends Component {
   state = {
     imageSelected: false,
     photo: null,
+    hide: true,
   };
   render() {
     const {navigation} = this.props;
@@ -84,6 +85,25 @@ class AskScreen2 extends Component {
             <Text style={styles.btnText}>확인</Text>
           </TouchableOpacity>
         </View>
+        <PopUpComponent
+          title={'이미지를 수정하시겠습니까?'}
+          body={''}
+          hide={this.state.hide}
+          onConfirm={() => {
+            this.setState({hide: true});
+            ImagePicker.openPicker({
+              width: 300,
+              height: 400,
+              cropping: false,
+            }).then(image => {
+              this.setState({
+                imageSelected: true,
+                photo: image.path,
+              });
+            });
+          }}
+          onCancel={() => this.setState({hide: true})}
+        />
       </View>
     );
   }
@@ -101,37 +121,12 @@ class AskScreen2 extends Component {
   _handleLibrary = () => {
     const {imageSelected} = this.state;
     if (imageSelected) {
-      Alert.alert(
-        '이미지를 수정하시겠습니까?',
-        '',
-        [
-          {
-            text: '취소',
-            style: 'cancel',
-          },
-          {
-            text: '확인',
-            onPress: () => {
-              ImagePicker.openPicker({
-                width: 300,
-                height: 400,
-                cropping: true,
-              }).then(image => {
-                this.setState({
-                  imageSelected: true,
-                  photo: image.path,
-                });
-              });
-            },
-          },
-        ],
-        {cancelable: true},
-      );
+      this.setState({hide: false});
     } else {
       ImagePicker.openPicker({
         width: 300,
         height: 400,
-        cropping: true,
+        cropping: false,
       }).then(image => {
         this.setState({
           imageSelected: true,

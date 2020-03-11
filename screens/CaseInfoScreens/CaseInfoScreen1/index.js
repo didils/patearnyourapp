@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MAIN_COLOR, TEXT_COLOR} from '../../../constants';
 import ProcessItem from '../../../components/ProcessItem';
+import {ChannelIO} from 'react-native-channel-plugin';
 
 const {width} = Dimensions.get('window');
 
@@ -23,14 +24,14 @@ class CaseInfoScreen1 extends Component {
     iconName: 'ios-arrow-forward',
     explain: '펼치기',
   };
+
   componentDidMount() {
     const {
       route: {
-        params: {cases, myProcessItem},
+        params: {cases},
       },
     } = this.props;
-    console.log('props in caseInfo1', cases);
-    // var dt = new Date('2020-10-30');
+
     var dt = new Date(cases.request_date);
     var dtExam = new Date(cases.request_date);
     if (cases.shorted_exam) {
@@ -74,16 +75,23 @@ class CaseInfoScreen1 extends Component {
     const {
       navigation,
       route: {
-        params: {cases, dateText2, myProcessItem},
+        params: {cases, dateText2},
+      },
+      route: {
+        params: {
+          cases: {process_item_set},
+        },
       },
     } = this.props;
-
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.menuIcon}
-            onPressOut={() => navigation.goBack(null)}>
+            onPressOut={() => {
+              navigation.goBack(null);
+              ChannelIO.show(true);
+            }}>
             <Icon name="md-close" size={30} color="black" />
           </TouchableOpacity>
           <Image
@@ -150,10 +158,7 @@ class CaseInfoScreen1 extends Component {
             </View>
           </View>
           <View>
-            {myProcessItem.filter(
-              el =>
-                el.case.identification_number === cases.identification_number,
-            ).length > 1 && (
+            {process_item_set.length > 1 && (
               <View style={styles.noticeBox}>
                 <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                   <Text
@@ -228,7 +233,12 @@ class CaseInfoScreen1 extends Component {
                         paddingRight: 15,
                       }}>
                       <TouchableOpacity
-                        onPress={() => navigation.navigate('Inform4')}>
+                        onPress={() => {
+                          ChannelIO.hide(true);
+                          navigation.navigate('Inform4', {
+                            identification_number: cases.identification_number,
+                          });
+                        }}>
                         <View style={styles.buttonPdf}>
                           <Text
                             style={{
@@ -385,6 +395,8 @@ class CaseInfoScreen1 extends Component {
               }}
               index={-2}
               array={[]}
+              last_status={'등록 가능성 검토 중'}
+              pointed={false}
             />
             <ProcessItem
               items={{
@@ -396,37 +408,26 @@ class CaseInfoScreen1 extends Component {
                 estimate_time: '1~2일 소요',
                 process_date: null,
               }}
+              last_status={'등록 가능성 검토 중'}
               index={-1}
-              array={myProcessItem.filter(
-                el =>
-                  el.case.identification_number === cases.identification_number,
-              )}
+              array={process_item_set}
+              pointed={process_item_set.length === 0}
             />
-            {myProcessItem &&
-              myProcessItem
-                .reverse()
+            {process_item_set &&
+              process_item_set
                 .sort(function(a, b) {
-                  if (a.id > b.id) {
-                    return 1;
-                  }
-                  if (a.id < b.id) {
-                    return -1;
-                  }
-                  // a must be equal to b
-                  return 0;
+                  return a.id - b.id;
                 })
-                .filter(
-                  el =>
-                    el.case.identification_number ===
-                    cases.identification_number,
-                )
                 .map((items, index, array) => (
                   <ProcessItem
+                    last_status={cases.progress_status}
                     items={items}
                     key={index}
                     index={index}
                     array={array}
                     navigation={this.props.navigation}
+                    identification_number={cases.identification_number}
+                    pointed={index === process_item_set.length - 1}
                   />
                 ))}
           </View>

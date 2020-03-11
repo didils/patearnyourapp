@@ -6,9 +6,11 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {MAIN_COLOR, TEXT_COLOR} from '../../../constants';
+import PopUpComponent from '../../../components/PopUpComponent';
 
 const {width, height} = Dimensions.get('window');
 class AskScreen4 extends Component {
@@ -18,7 +20,7 @@ class AskScreen4 extends Component {
   componentDidMount = () => {
     const {
       route: {
-        params: {logoType, logo, selected},
+        params: {logoType, logo},
       },
     } = this.props;
     if (logoType === 'text') {
@@ -165,17 +167,38 @@ class AskScreen4 extends Component {
           </View>
           <TouchableOpacity
             style={{paddingBottom: 20}}
-            onPressOut={this.props.onPressConfirm}>
+            onPressOut={() => this.props.navigation.navigate('Inform3')}>
             <Text style={{color: MAIN_COLOR, fontWeight: '600'}}>
               전체 절차가 궁금하신가요?
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPressOut={this.props.onPressConfirm}>
-            <Text style={styles.btnText}>신청하기</Text>
+            onPress={() => this.props.onPressConfirm()}>
+            {this.props.isSubmitted ? (
+              <ActivityIndicator color={'white'} size={20} />
+            ) : (
+              <Text style={styles.btnText}>신청하기</Text>
+            )}
           </TouchableOpacity>
         </View>
+        <PopUpComponent
+          title={'신청이 완료되었습니다!'}
+          body={''}
+          hide={this.props.hide}
+          onConfirm={() => {
+            this.props.hidePopup();
+            this.props.getCases();
+            this.props.changeToCase();
+            this.props.navigation.navigate('Main');
+          }}
+          onCancel={() => {
+            this.props.hidePopup();
+            this.props.getCases();
+            this.props.changeToCase();
+            this.props.navigation.navigate('Main');
+          }}
+        />
       </View>
     );
   }
@@ -185,7 +208,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
-    paddingTop: 5,
   },
   noticeBox: {
     borderRadius: 1,

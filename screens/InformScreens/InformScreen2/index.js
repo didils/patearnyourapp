@@ -30,7 +30,7 @@ class InformScreen2 extends Component {
               navigation.goBack(null);
             }}>
             <View style={styles.menuIcon}>
-              <Icon name="ios-close" size={30} color="black" />
+              <Icon name="md-close" size={30} color="black" />
             </View>
           </TouchableOpacity>
           <Image
