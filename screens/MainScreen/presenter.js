@@ -30,6 +30,37 @@ class MainScreen extends Component {
     });
   }
 
+  async sendNotification() {
+    const FIREBASE_API_KEY =
+      'AAAAVMLwCz8:APA91bExwuSnhMzBFRiqkDwYPjXFp5uDlF9Xg5fmIpzpVnBjPbCvl_CE8uzGZw1u0_DdY5bob3CKf-mEJ_Lap5mYszae7B2m9iOIIfLjalFTIP4YuV424EWF56rEjp4E74mfewtbOIMr';
+    const message = {
+      registration_ids: [
+        'eyYSaIDaR62k0s8XxoQKtw:APA91bFAMk6Oq5dP3S_LIOz8a-UwZBxvaVOPZAvSxQnu1pB1eDiccZDIIN7_eUl-iNvgyaG0WpWJ0yGBA6ctkuoMxXjsL2khwAAXIeLBeM4K5_CERKbaHbrxykarKGdNDmVsa2oOOSL9',
+      ],
+      notification: {
+        title: '테스트 제목',
+        body: '테스트 본문',
+        vibrate: 1,
+        sound: 1,
+        show_in_foregroud: true,
+        priority: 'high',
+        content_available: true,
+      },
+    };
+
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: 'key=' + FIREBASE_API_KEY,
+    });
+
+    let response = await fetch('https://fcm.googleapis.com/fcm/send', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(message),
+    });
+    response = await response.json();
+  }
+
   render() {
     const {navigation, user} = this.props;
     return (
@@ -168,8 +199,9 @@ class MainScreen extends Component {
             </View>
             <TouchableOpacity
               onPress={() => {
-                ChannelIO.hide(true);
-                navigation.navigate('Inform1');
+                this.sendNotification();
+                // ChannelIO.hide(true);
+                // navigation.navigate('Inform1');
               }}>
               <View style={styles.mainBtnBottom}>
                 <View

@@ -60,6 +60,7 @@ class AppContainer extends Component {
       initApp();
     }
   }
+
   render() {
     const {isLoggedIn, logOut, navigation, profile, user} = this.props;
     function CustomDrawerContent(props) {

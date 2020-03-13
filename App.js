@@ -80,10 +80,12 @@ export default class App extends Component {
     ChannelIO.boot(settings).then(result => {});
     ChannelIO.show(true);
     if (Platform.OS === 'ios') {
+      // Firebase Notification 설정
       firebase
         .messaging()
         .hasPermission()
         .then(enabled => {
+          console.log('enabled in firebase hasPermission', enabled);
           if (enabled) {
             console.log(
               'hasPermission, enabled 즉 기존에 푸시가 이미 허용되어 있음',
@@ -93,6 +95,20 @@ export default class App extends Component {
             this.NotiPermission();
           }
         });
+      let fcmToken = await AsyncStorage.getItem('fcmToken');
+      console.log('AsyncStorage 취득한 fcmToken', fcmToken);
+      if (!fcmToken) {
+        fcmToken = await firebase.messaging().getToken();
+        console.log('firebase로부터 취득한 fcmToken', fcmToken);
+        if (fcmToken) {
+          ChannelIO.initPushToken(fcmToken);
+          await AsyncStorage.setItem('fcmTocken', fcmToken);
+        }
+      } else if (fcmToken) {
+        console.log('AsyncStorage 취득한 fcmToken', fcmToken);
+      }
+
+      // Channel IO 설정
       PushNotificationIOS.addEventListener('register', token => {
         console.log('addEventListener(register', token);
         ChannelIO.initPushToken(token);
@@ -125,13 +141,10 @@ export default class App extends Component {
             this.NotiPermission();
           }
         });
-
       let fcmToken = await AsyncStorage.getItem('fcmToken');
-
       this.onRefreshListener = firebase.messaging().onTokenRefresh(fcmToken => {
         ChannelIO.initPushToken(fcmToken);
       });
-
       if (!fcmToken) {
         fcmToken = await firebase.messaging().getToken();
         console.log('firebase로부터 취득한 fcmToken', fcmToken);
@@ -153,11 +166,61 @@ export default class App extends Component {
           });
         });
     }
+
+    this.removeNotificationDisplayedListener = firebase
+      .notifications()
+      .onNotificationDisplayed((notification: Notification) => {
+        // Process your notification as required
+        // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+      });
+    this.removeNotificationListener = firebase
+      .notifications()
+      .onNotification((notification: Notification) => {
+        // Process your notification as required
+        console.log(
+          'notification in firebase removeNotificationListener',
+          notification,
+        );
+      });
+    this.removeNotificationOpenedListener = firebase
+      .notifications()
+      .onNotificationOpened((notificationOpen: NotificationOpen) => {
+        // Get the action triggered by the notification being opened
+        const action = notificationOpen.action;
+        // Get information about the notification that was opened
+        const notification: Notification = notificationOpen.notification;
+
+        console.log(
+          'action and notification notificationOpen when app is forground/background',
+          action,
+          notification,
+        );
+      });
+
+    const notificationOpen: NotificationOpen = await firebase
+      .notifications()
+      .getInitialNotification();
+    if (notificationOpen) {
+      // App was opened by a notification
+      // Get the action triggered by the notification being opened
+      const action = notificationOpen.action;
+      // Get information about the notification that was opened
+      const notification: Notification = notificationOpen.notification;
+
+      console.log(
+        'action and notification notificationOpen when app is closed',
+        action,
+        notification,
+      );
+    }
   }
 
   componentWillUnmount() {
     this.onRefreshListener();
     this.mListener();
+    this.removeNotificationDisplayedListener();
+    this.removeNotificationListener();
+    this.removeNotificationOpenedListener();
   }
 
   async sendNotification() {
