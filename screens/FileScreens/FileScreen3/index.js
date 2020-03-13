@@ -29,7 +29,6 @@ class FileScreen3 extends Component {
         params: {identification_number, patentApplicantNumber},
       },
     } = this.props;
-
     if (imageSelected) {
       navigation.navigate('File4', {
         assignType: 'image',
@@ -196,14 +195,16 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignItems: 'center',
   },
+
   button: {
     backgroundColor: MAIN_COLOR,
-    width,
-    height: width * 0.15,
+    width: width * 0.93,
+    height: width * 0.13,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 10,
+    bottom: 17,
+    borderRadius: 3,
   },
   btnText: {
     color: 'white',

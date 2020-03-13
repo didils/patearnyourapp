@@ -32,7 +32,6 @@ class Container extends Component {
   };
 
   _showPopup = () => {
-    console.log('shiw popup');
     this.setState({
       hide: false,
     });

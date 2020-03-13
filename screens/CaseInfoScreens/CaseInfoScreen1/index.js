@@ -75,10 +75,10 @@ class CaseInfoScreen1 extends Component {
     const {
       navigation,
       route: {
-        params: {cases, dateText2},
-      },
-      route: {
         params: {
+          cases,
+          dateText2,
+          user,
           cases: {process_item_set},
         },
       },
@@ -397,6 +397,7 @@ class CaseInfoScreen1 extends Component {
               array={[]}
               last_status={'등록 가능성 검토 중'}
               pointed={false}
+              applicant_set={[]}
             />
             <ProcessItem
               items={{
@@ -408,6 +409,7 @@ class CaseInfoScreen1 extends Component {
                 estimate_time: '1~2일 소요',
                 process_date: null,
               }}
+              applicant_set={[]}
               last_status={'등록 가능성 검토 중'}
               index={-1}
               array={process_item_set}
@@ -420,6 +422,7 @@ class CaseInfoScreen1 extends Component {
                 })
                 .map((items, index, array) => (
                   <ProcessItem
+                    applicant_set={user.profile.applicant_set}
                     last_status={cases.progress_status}
                     items={items}
                     key={index}

@@ -14,29 +14,13 @@ const {width, height} = Dimensions.get('window');
 
 class AddressComponent extends Component {
   render() {
-    const {
-      navigation,
-      item,
-      assignType,
-      logo,
-      patentApplicantNumber,
-      identification_number,
-      setAddr,
-    } = this.props;
-    console.log('this.props', this.props);
+    const {navigation, item, setAddr} = this.props;
 
     return (
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
             setAddr(item.zipNo, item.roadAddrPart1);
-            // navigation.navigate('File5', {
-            //   assignType,
-            //   logo,
-            //   patentApplicantNumber,
-            //   identification_number,
-            //   selectedAddress: item.roadAddr,
-            // });
           }}>
           <View style={styles.button}>
             <Text style={{fontWeight: '300', fontSize: 22, marginBottom: 15}}>

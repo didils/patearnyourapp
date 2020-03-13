@@ -34,17 +34,12 @@ class ManageScreen2 extends Component {
     const sorted = allCase.filter(el => {
       date_diff_indays(new Date(el.request_date), currentFullDate) === 0;
     });
-    console.log('sorted', sorted);
   };
   componentDidMount() {
     this.sortList(1);
   }
   render() {
     const {navigation, allCase, allProcessItem} = this.props;
-
-    console.log('all Case props', allCase);
-    console.log('new Date', new Date('2010-01-02'));
-    console.log('getDate', new Date('2010-01-02').getDate());
     return (
       <View style={styles.container}>
         <View style={styles.header}>

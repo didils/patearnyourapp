@@ -8,7 +8,7 @@ import container from './container';
 const mapStateToProps = (state, ownProps) => {
   const {user} = state;
   return {
-    user,
+    applicant_set: user.profile.applicant_set,
   };
 };
 

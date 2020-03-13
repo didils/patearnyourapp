@@ -16,8 +16,6 @@ const {width} = Dimensions.get('window');
 
 class PayScreen1 extends Component {
   render() {
-    console.log('Pay Screen 1  props', this.props);
-
     const {
       navigation,
       doApiAction,
@@ -35,7 +33,6 @@ class PayScreen1 extends Component {
         navigation.navigate('PayFail', response);
         Alert.alert(response.error_msg);
       } else if (response.imp_success === 'true') {
-        console.log('Pay 1 callback function response', response);
         doApiAction();
         navigation.navigate('PayResult', response);
       }

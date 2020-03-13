@@ -30,7 +30,13 @@ class ProcessItem extends Component {
     ).start();
   }
   render() {
-    const {items, navigation, pointed} = this.props;
+    const {
+      items,
+      navigation,
+      pointed,
+      identification_number,
+      applicant_set,
+    } = this.props;
 
     const yellow = '#ffeaa7';
 
@@ -125,15 +131,15 @@ class ProcessItem extends Component {
                   marginTop: 8,
                 }}>
                 {items.estimate_time !== null && items.estimate_time !== '' && (
-                  <Text
+                  <Animated.Text
                     style={{
                       fontSize: 20,
                       fontWeight: 'bold',
-                      color: pointed ? MAIN_COLOR : 'lightgrey',
+                      color: pointed ? colorInterpolate : 'lightgrey',
                       marginBottom: width / 36,
                     }}>
                     {items.estimate_time}
-                  </Text>
+                  </Animated.Text>
                 )}
                 {items.expected_date !== null && items.expected_date !== '' && (
                   <Text
@@ -329,10 +335,15 @@ class ProcessItem extends Component {
                       }}>
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate('File1', {
-                            identification_number: this.props
-                              .identification_number,
-                          });
+                          if (applicant_set && applicant_set.length > 0) {
+                            navigation.navigate('File5', {
+                              identification_number,
+                            });
+                          } else {
+                            navigation.navigate('File1', {
+                              identification_number,
+                            });
+                          }
                         }}>
                         <View
                           style={[styles.button, {justifyContent: 'center'}]}>

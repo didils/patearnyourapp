@@ -67,7 +67,9 @@ export default class App extends Component {
       .messaging()
       .requestPermission()
       .then(() => {
-        console.log('사용자가 푸쉬 허용함');
+        console.log(
+          '사용자가 푸쉬 허용함, 즉 기존에는 허용되어 있지 않으나 방금 허용 한거임',
+        );
       })
       .catch(error => {
         console.log('사용자가 푸쉬 거부함');
@@ -78,7 +80,21 @@ export default class App extends Component {
     ChannelIO.boot(settings).then(result => {});
     ChannelIO.show(true);
     if (Platform.OS === 'ios') {
+      firebase
+        .messaging()
+        .hasPermission()
+        .then(enabled => {
+          if (enabled) {
+            console.log(
+              'hasPermission, enabled 즉 기존에 푸시가 이미 허용되어 있음',
+              enabled,
+            );
+          } else {
+            this.NotiPermission();
+          }
+        });
       PushNotificationIOS.addEventListener('register', token => {
+        console.log('addEventListener(register', token);
         ChannelIO.initPushToken(token);
       });
       PushNotificationIOS.addEventListener('notification', notification => {
@@ -92,6 +108,7 @@ export default class App extends Component {
               );
             } else {
               //other push logics goes here
+              console.log('//other push logics goes here', result);
               notification.finish(PushNotificationIOS.FetchResult.NoData);
             }
           },

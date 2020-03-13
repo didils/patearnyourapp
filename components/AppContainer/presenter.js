@@ -39,6 +39,8 @@ import FileScreen1 from '../../screens/FileScreens/FileScreen1';
 import FileScreen2 from '../../screens/FileScreens/FileScreen2';
 import FileScreen3 from '../../screens/FileScreens/FileScreen3';
 import FileScreen4 from '../../screens/FileScreens/FileScreen4';
+import FileScreen5 from '../../screens/FileScreens/FileScreen5';
+import FileScreen6 from '../../screens/FileScreens/FileScreen6';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import MainScreen from '../../screens/MainScreen';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -188,6 +190,8 @@ class AppContainer extends Component {
             <Drawer.Screen name="File2" component={FileScreen2} />
             <Drawer.Screen name="File3" component={FileScreen3} />
             <Drawer.Screen name="File4" component={FileScreen4} />
+            <Drawer.Screen name="File5" component={FileScreen5} />
+            <Drawer.Screen name="File6" component={FileScreen6} />
           </Drawer.Navigator>
         </NavigationContainer>
       </View>

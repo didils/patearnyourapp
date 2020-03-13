@@ -135,7 +135,6 @@ class LogInScreen4 extends Component {
             guest_token: json.token,
           });
         }
-        console.log(this.state.guest_token);
       });
   };
 }

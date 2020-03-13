@@ -68,6 +68,7 @@ class MainScreen extends Component {
                     {this.props.myCase &&
                       this.props.myCase.map((cases, index) => (
                         <MainCase
+                          user={user}
                           cases={cases}
                           key={index}
                           navigation={this.props.navigation}

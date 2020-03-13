@@ -242,7 +242,7 @@ class MainCase extends Component {
   };
 
   render() {
-    const {cases, navigation} = this.props;
+    const {cases, navigation, user} = this.props;
     return (
       <View style={styles.container}>
         {cases.trademark_title === 'image' ? (
@@ -304,6 +304,7 @@ class MainCase extends Component {
                     cases: this.props.cases,
                     dateText: this.state.dateText,
                     dateText2: this.state.dateText2,
+                    user,
                   });
                 }}>
                 <View
@@ -376,6 +377,7 @@ class MainCase extends Component {
                     cases: this.props.cases,
                     dateText: this.state.dateText,
                     dateText2: this.state.dateText2,
+                    user,
                   });
                 }}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>

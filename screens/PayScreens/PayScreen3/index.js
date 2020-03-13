@@ -38,7 +38,6 @@ class PayScreen4 extends Component {
   };
   render() {
     const {navigation} = this.props;
-    console.log('Pay3 props', this.props);
     return (
       <View style={styles.container}>
         <View style={styles.header}>

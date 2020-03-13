@@ -56,7 +56,7 @@ function uploadFastExam(images, identification_number, pdf) {
       data.append(`image${x}`, {
         uri: images[x].path,
         type: 'image/jpeg',
-        name: `${uuidv1()}.png`,
+        name: `${uuidv1()}.jpg`,
       });
     }
   }
@@ -97,8 +97,7 @@ function uploadProcessItem(identification_number) {
   const data = new FormData();
   data.append('current_status', '출원 준비');
   data.append('descriptions', '출원서를 준비 중입니다.');
-  data.append('estimate_time', '약 1~2일 소요됩니다.');
-  console.log('redux uploadProcessItem function data', data);
+  data.append('estimate_time', '1~2일 소요');
   return (dispatch, getState) => {
     const {
       user: {token},
@@ -117,7 +116,6 @@ function uploadProcessItem(identification_number) {
       if (response.status === 401) {
         dispatch(userActions.logOut());
       } else if (response.ok) {
-        console.log('redux uploadProcessItem function response', response);
         return true;
       } else {
         return false;
@@ -145,12 +143,9 @@ function getCases() {
         }
       })
       .then(json => {
-        console.log(json);
         dispatch(setMyCase(json));
       })
-      .catch(function() {
-        console.log('Promise Rejected');
-      });
+      .catch(function() {});
   };
 }
 
@@ -175,9 +170,7 @@ function getAllCases() {
       .then(json => {
         dispatch(setAllCase(json));
       })
-      .catch(function() {
-        console.log('Promise Rejected');
-      });
+      .catch(function() {});
   };
 }
 
@@ -200,9 +193,7 @@ function getProcessItems() {
         }
       })
       .then(json => dispatch(setMyProcessItem(json)))
-      .catch(function() {
-        console.log('Promise Rejected');
-      });
+      .catch(function() {});
   };
 }
 
@@ -227,9 +218,7 @@ function getAllProcessItems() {
       .then(json => {
         dispatch(setAllProcessItem(json));
       })
-      .catch(function() {
-        console.log('Promise Rejected');
-      });
+      .catch(function() {});
   };
 }
 

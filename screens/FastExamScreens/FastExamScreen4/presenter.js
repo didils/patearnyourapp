@@ -22,7 +22,6 @@ class FastExamScreen4 extends Component {
         params: {images, identification_number, pdf},
       },
     } = this.props;
-    console.log('fastexam4 props', this.props);
     return (
       <View style={styles.container}>
         <View style={styles.header}>
